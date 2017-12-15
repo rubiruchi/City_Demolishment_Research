@@ -34,12 +34,13 @@ image_size = 1000
 #
 ################################################################################
 
-with open('CleanDataBase/vacantBaltimore_171117_8000__OSMNX', 'rb') as f:
-    reader = csv.reader(f)
-    # vacantosmnx : list[int] - list of all vacant houses id
-    vacantosmnx = map(int,list(reader)[0])
-
-
+def open_Vacant_Set( file_name ):
+    with open(file_name, 'rb') as f:
+        reader = csv.reader(f)
+        # vacantosmnx : list[int] - list of all vacant houses id
+        vacantosmnx = map(int,list(reader)[0])
+    return vacantosmnx
+    
 
 ################################################################################
 #
@@ -52,8 +53,10 @@ with open('CleanDataBase/vacantBaltimore_171117_8000__OSMNX', 'rb') as f:
 ################################################################################
 
 class OSMNX_Map(object):
-    def __init__(self, address='1516 Kenhill Ave, Baltimore, MD', radius=80, same = False, Baltimore = True):
+    def __init__(self, file, address='1516 Kenhill Ave, Baltimore, MD', radius=80, same = False, Baltimore = True):
         
+        self.vacantosmnx = open_Vacant_Set("VacantSet-OSMNX/vacantOSMNX"+file)
+        self.file = file
         self.address = address
         self.radius = radius
         self.Baltimore = Baltimore
@@ -115,7 +118,7 @@ class OSMNX_Map(object):
             housetype=pd.Series(np.zeros(len(self.gdf[self.gdf.columns[0]]),dtype = int)).values) 
         
         # set vacant house
-        for i in vacantosmnx:
+        for i in self.vacantosmnx:
             if i in self.gdf.index:
                 self.gdf.loc[i,'housetype'] = 2     
         self.gdf_proj = ox.project_gdf(self.gdf)
@@ -128,15 +131,15 @@ class OSMNX_Map(object):
             if self.gdf['building'][i] != 'yes':
                 self.gdf.loc[i,'housetype'] = -1
             # if it's amenity = police
-            #elif {'amenity'}.issubset(self.gdf.columns) and self.gdf['amenity'][i] == 'police':
-            #    self.gdf.loc[i,'housetype'] = 100
+            elif {'amenity'}.issubset(self.gdf.columns) and self.gdf['amenity'][i] == 'police':
+                self.gdf.loc[i,'housetype'] = 100
             # if it's amenity = place_of_worship
-            #elif {'amenity'}.issubset(self.gdf.columns) and self.gdf['amenity'][i] == 'place_of_worship':
-            #    self.gdf.loc[i,'housetype'] = 50
+            elif {'amenity'}.issubset(self.gdf.columns) and self.gdf['amenity'][i] == 'place_of_worship':
+                self.gdf.loc[i,'housetype'] = 50
             # if no address for the building or the area of buildig > 398
             # option: area > 125 or area < 37
-            #elif pd.isnull(self.gdf['addr:street'][i]) or self.gdf_proj.area[i] > 398 : 
-            #    self.gdf.loc[i,'housetype'] = 3
+            elif pd.isnull(self.gdf['addr:street'][i]) or self.gdf_proj.area[i] > 398 : 
+                self.gdf.loc[i,'housetype'] = 3
                 
         # update gdf_proj
         # 10.20.2017 [ to be updated ] not sure if it's neccessary to have this
@@ -172,16 +175,15 @@ class OSMNX_Map(object):
         if self.Baltimore:
             return []
         
-        elif self.radius == 550:
-            
-            with open('Edge550', 'rb') as f:
+        
+        try: 
+            with open("EdgeSet-OSMNX/EdgeOSMNX" + self.file, 'rb') as f:
                 reader = csv.reader(f)
                 E = list(reader)[0]
                 
             for i in xrange(len(E)):
                 E[i] = make_tuple(E[i])
- 
-        else:
+        except:
         
             E = []
             print np.unique(self.gdf['housetype'])
@@ -199,6 +201,11 @@ class OSMNX_Map(object):
                         if node in gdf['nodes'][gdf.index[j]]:
                             E.append((gdf.index[i],gdf.index[j]))
                             break
+                            
+            with open("EdgeSet-OSMNX/EdgeOSMNX" + self.file, 'wb') as myfile:
+                wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+                wr.writerow(E)
+                
         return E
     
     
