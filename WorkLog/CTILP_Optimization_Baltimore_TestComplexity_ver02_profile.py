@@ -33,7 +33,7 @@ image_size = 1000
 #       ox.buildings_from_address('1516 Kenhill Ave, Baltimore, MD', distance=550)
 #
 ################################################################################
-@profile
+#@profile
 def open_Vacant_Set( file_name ):
     with open(file_name, 'rb') as f:
         reader = csv.reader(f)
@@ -53,7 +53,7 @@ def open_Vacant_Set( file_name ):
 ################################################################################
 
 class OSMNX_Map_ILP(object):
-    @profile
+    #@profile
     def __init__(self, file, address='1516 Kenhill Ave, Baltimore, MD', radius=80, same = False, Baltimore = True):
 
         self.vacantosmnx = open_Vacant_Set("VacantSet-OSMNX/vacantOSMNX"+file)
@@ -103,7 +103,7 @@ class OSMNX_Map_ILP(object):
         #self.CompareHouses = self.GetCompareHousesSet_OSMNX()
         print "initial comparehouses"
 
-    @profile
+    #@profile
     def initial_housetype(self):
         """
         update gdf by adding column 'housetype' take integer value
@@ -148,7 +148,7 @@ class OSMNX_Map_ILP(object):
         # 10.20.2017 [ to be updated ] not sure if it's neccessary to have this
         self.gdf_proj = ox.project_gdf(self.gdf)
 
-    @profile
+    #@profile
     def initial_storytype(self, same = False):
         """
         update gdf by adding column 'housetype' take integer value
@@ -162,7 +162,7 @@ class OSMNX_Map_ILP(object):
         else:
             self.gdf = self.gdf.assign(storytype= np.random.randint(2,3,size = sLength))
 
-    @profile
+    #@profile
     def GetEdgeSet_OSMNX(self, file_name ):
         """
         Inport data: Edge550 - adjacent houses set in
@@ -212,7 +212,7 @@ class OSMNX_Map_ILP(object):
 
         return E
 
-    @profile
+    #@profile
     def GetHouseSet_OSMNX(self):
         """
         get House set - list of house id if housetype != -1
@@ -220,7 +220,7 @@ class OSMNX_Map_ILP(object):
         H = self.gdf[self.gdf['housetype'] != -1].index.tolist()
         return H
 
-    @profile
+    #@profile
     def GetRenterSet_OSMNX(self):
         """
         get renter houses set - list of house id if housetype == 0
@@ -231,7 +231,7 @@ class OSMNX_Map_ILP(object):
                 R.append(i)
         return R
 
-    @profile
+    #@profile
     def GetOwnerSet_OSMNX(self):
         """
         get owner houses set - list of house id if housetype == 1
@@ -242,7 +242,7 @@ class OSMNX_Map_ILP(object):
                 O.append(i)
         return O
 
-    @profile
+    #@profile
     def GetVacantSet_OSMNX(self):
         """
         get vacant houses set - list of house id if housetype == 2
@@ -252,7 +252,7 @@ class OSMNX_Map_ILP(object):
             if self.gdf['housetype'][i] == 2:
                 V.append(i)
         return V
-    @profile
+    #@profile
     def GetCompareHousesSet_OSMNX(self):
         """
         get compare houses set - (O+R)*V
@@ -265,7 +265,7 @@ class OSMNX_Map_ILP(object):
             for vacant in self.Vacants:
                 C.append((renter,vacant))
         return C
-    @profile
+    #@profile
     def plot(self, x = None, size = 9, name = 'temp_image', network_type='walk', dpi=90,
              default_width=5, street_widths=None):
         """
@@ -361,7 +361,7 @@ class OSMNX_Map_ILP(object):
     ################################################################################
     #
     # Class ILP_sol
-    @profile
+    #@profile
     def initial_ILP(self):
 
         # initial iterator
@@ -390,7 +390,7 @@ class OSMNX_Map_ILP(object):
             # model update
             self.model.update()
 
-    @profile
+    #@profile
     def initial_price(self,Budget = 500000,demolish_2_story = 13000,demolish_3_story = 22000,r_relocate = 85000,
                       o_relocate = 170000,wall_2_story = 14000,wall_3_story =25000,cost_reduction = 0):
         """
@@ -414,7 +414,7 @@ class OSMNX_Map_ILP(object):
 
         # set the budget
         self.set_budget()
-    @profile
+    #@profile
     def set_budget(self):
         """
         add budget list
@@ -472,7 +472,7 @@ class OSMNX_Map_ILP(object):
             # benefit
             self.Benefit = [ self.cost_reduction for i in xrange(len(self.Edge))]
 
-    @profile
+    #@profile
     def update_model_OSMNX(self,d ,h,
                            Occupied = None, Vacant = None,
                            Max = False, d_e = 30, power = 1,
@@ -695,7 +695,7 @@ class OSMNX_Map_ILP(object):
             # set objective function
             self.model.setObjective( quicksum(self.t[i] for i in occupied), GRB.MAXIMIZE)
 
-    @profile
+    #@profile
     def solve(self):
         """
         solve the optimzation problem
@@ -705,13 +705,13 @@ class OSMNX_Map_ILP(object):
         # update the status : the max/min of objective functions, and sum of deolished houses set
         self.status_update()
 
-    @profile
+    #@profile
     def get_x(self):
         """
         return binary variables
         """
         return self.x
-    @profile
+    #@profile
     def no_good_update(self):
 
         """
@@ -736,7 +736,7 @@ class OSMNX_Map_ILP(object):
                 ),name = 'temp'
             )
 
-    @profile
+    #@profile
     def status_update(self):
         """
         get the solution detail

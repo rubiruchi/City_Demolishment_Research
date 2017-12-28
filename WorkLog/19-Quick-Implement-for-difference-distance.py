@@ -1,6 +1,5 @@
 
-from CTILP_Optimization_Baltimore_TestComplexity_ver02 import *
-
+from CTILP_Optimization_Baltimore_TestComplexity_ver02_profile import *
 
 @profile
 def set_up_data(radius, file_name):
