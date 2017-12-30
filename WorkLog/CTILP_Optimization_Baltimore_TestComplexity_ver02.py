@@ -15,6 +15,9 @@ import csv
 from ast import literal_eval as make_tuple
 import networkx as nx
 import math
+import time
+import sys
+
 
 # Building footprint (plus street network) figure-ground diagrams
 #import matplotlib.pyplot as plt
@@ -57,7 +60,8 @@ class OSMNX_Map_ILP(object):
     def __init__(self, file, address='1516 Kenhill Ave, Baltimore, MD', radius=80, same = False, Baltimore = True):
 
         self.vacantosmnx = open_Vacant_Set("VacantSet-OSMNX/vacantOSMNX"+file)
-        print "************Get the VacantSet :" , "VacantSet-OSMNX/vacantOSMNX"+file
+        print "Vacant Set:" , "VacantSet-OSMNX/vacantOSMNX"+file+ " \n"
+
         self.file = file
         self.address = address
         self.radius = radius
@@ -74,6 +78,7 @@ class OSMNX_Map_ILP(object):
         #    geometry
         #    nodes
         # < check week6_xx.ipython to get more detail >
+        s = time.time()
         if Baltimore:
             poly = ox.gdf_from_place('Baltimore, Maryland, USA', which_result=2)
             # Get buildins gdf based on polygon
@@ -83,25 +88,29 @@ class OSMNX_Map_ILP(object):
         #
         # add new column centroid - the centrel point of house
         self.gdf = self.gdf.assign(centroid = self.gdf['geometry'].centroid)
+        print "GEOdataframe get:" , time.time() - s, " s"
+        print "list size(gdf)  :" , self.gdf.shape
+        print "size(byte)      :" , sys.getsizeof(self.gdf), " bytes \n"
 
-        print "initial setting set"
 
         # initialize the model
         self.initial_housetype()
         self.initial_storytype(same = same)
 
-        print "initial house set"
+
         #
         self.Edge = self.GetEdgeSet_OSMNX(self.file)
-        print "initial edge set"
+
+        print "Get Houses,Renters,Owners,Vacants......................................"
+        s = time.time()
         self.Houses = self.GetHouseSet_OSMNX()
-        self.Owners = self.GetOwnerSet_OSMNX()
-        self.Renters = self.GetRenterSet_OSMNX()
-        self.Vacants = self.GetVacantSet_OSMNX()
-        print "initial HORV"
-        #self.initial_price()
-        #self.CompareHouses = self.GetCompareHousesSet_OSMNX()
-        print "initial comparehouses"
+        self.Renters, self.Owners, self.Vacants = self.GetRenter_Owner_VacantSet_OSMNX()
+        print "Houses_Renter_Owner_VacantSet get:", time.time() - s, " s"
+        print "Houses : ", len(self.Houses), " bytes: ", sys.getsizeof(self.Houses), " bytes"
+        print "Renters: ", len(self.Renters), " bytes: ", sys.getsizeof(self.Renters), " bytes"
+        print "Owners : ", len(self.Owners), " bytes: ", sys.getsizeof(self.Owners), " bytes"
+        print "Vacants: ", len(self.Vacants), " bytes: ", sys.getsizeof(self.Vacants), " bytes \n"
+
 
     #@profile
     def initial_housetype(self):
@@ -115,6 +124,8 @@ class OSMNX_Map_ILP(object):
             50 : curch
             100: police
         """
+        print "initial_housetype......................................"
+        s = time.time()
         # add new column 'housetype'
         sLength = len(self.gdf[self.gdf.columns[0]])
         self.gdf = self.gdf.assign(
@@ -147,6 +158,10 @@ class OSMNX_Map_ILP(object):
         # update gdf_proj
         # 10.20.2017 [ to be updated ] not sure if it's neccessary to have this
         self.gdf_proj = ox.project_gdf(self.gdf)
+        print "House type GEOdataframe get:" , time.time() - s, " s"
+        print "list size(gdf_proj)        :" , self.gdf_proj.shape
+        print "size(byte)                 :" , sys.getsizeof(self.gdf_proj), " bytes \n"
+
 
     #@profile
     def initial_storytype(self, same = False):
@@ -156,11 +171,13 @@ class OSMNX_Map_ILP(object):
         if same is True, then only take integer value 2 in the column
         else randomly assign 2 or 3 into the column
         """
+        print "initial_storytype.................................."
         sLength = len(self.gdf[self.gdf.columns[0]])
         if not same:
             self.gdf = self.gdf.assign(storytype= np.random.randint(2,4,size = sLength))
         else:
             self.gdf = self.gdf.assign(storytype= np.random.randint(2,3,size = sLength))
+
 
     #@profile
     def GetEdgeSet_OSMNX(self, file_name ):
@@ -170,7 +187,8 @@ class OSMNX_Map_ILP(object):
 
         get edge set
         """
-
+        print "GetEdgeSet_OSMNX..................................."
+        s = time.time()
         # get tuple set
         # it take a while to get edge set
         # I will recommend the usre to get edges separatly and save into a txt or csv file
@@ -186,11 +204,11 @@ class OSMNX_Map_ILP(object):
             for i in xrange(len(E)):
                 E[i] = make_tuple(E[i])
 
-            print "************Get the EdgeSet :" , "EdgeSet-OSMNX/EdgeOSMNX" + self.file
+            print "EdgeSet from :" , "EdgeSet-OSMNX/EdgeOSMNX" + self.file
         except:
 
             E = []
-            print np.unique(self.gdf['housetype'])
+            #print np.unique(self.gdf['housetype'])
 
             # very important step
             # if there is no structure
@@ -210,6 +228,10 @@ class OSMNX_Map_ILP(object):
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerow(E)
 
+        print "Edge set get   :" , time.time() - s, " s"
+        print "list size(edge):" , len(E)
+        print "size(byte)     :" , sys.getsizeof(E), " bytes \n"
+
         return E
 
     #@profile
@@ -221,42 +243,30 @@ class OSMNX_Map_ILP(object):
         return H
 
     #@profile
-    def GetRenterSet_OSMNX(self):
+    def GetRenter_Owner_VacantSet_OSMNX(self):
         """
         get renter houses set - list of house id if housetype == 0
         """
         R = []
+        O = []
+        V = []
         for i in self.gdf.index:
             if self.gdf['housetype'][i] == 0:
                 R.append(i)
-        return R
-
-    #@profile
-    def GetOwnerSet_OSMNX(self):
-        """
-        get owner houses set - list of house id if housetype == 1
-        """
-        O = []
-        for i in self.gdf.index:
-            if self.gdf['housetype'][i] == 1:
+            elif self.gdf['housetype'][i] == 1:
                 O.append(i)
-        return O
-
-    #@profile
-    def GetVacantSet_OSMNX(self):
-        """
-        get vacant houses set - list of house id if housetype == 2
-        """
-        V = []
-        for i in self.gdf.index:
-            if self.gdf['housetype'][i] == 2:
+            elif self.gdf['housetype'][i] == 2:
                 V.append(i)
-        return V
+        return R,O,V
+
+
     #@profile
     def GetCompareHousesSet_OSMNX(self):
         """
         get compare houses set - (O+R)*V
         """
+        print "GetCompareHousesSet_OSMNX.............................."
+        s = time.time()
         C = []
         for owner in self.Owners:
             for vacant in self.Vacants:
@@ -264,6 +274,10 @@ class OSMNX_Map_ILP(object):
         for renter in self.Renters:
             for vacant in self.Vacants:
                 C.append((renter,vacant))
+        print "Compare set get        :" , time.time() - s, " s"
+        print "list size(comparehouse):" , len(C)
+        print "size(byte)             :" , sys.getsizeof(C), " bytes \n"
+
         return C
     #@profile
     def plot(self, x = None, size = 9, name = 'temp_image', network_type='walk', dpi=90,
@@ -278,6 +292,8 @@ class OSMNX_Map_ILP(object):
                      default_width(int) : default 5
                      street_widths(int) : default None
         """
+        print "plot...................................................."
+        s = time.time()
         # default color set - before optimization
         ec = []
         for i in self.gdf.index:
@@ -329,6 +345,7 @@ class OSMNX_Map_ILP(object):
             # save image
             Image('{}/{}.{}'.format(img_folder, name, extension),height = image_size,width= image_size)
 
+            print "drawing time:", time.time() - s, " s \n"
             return fig,ax
 
         # after optimization
@@ -353,7 +370,7 @@ class OSMNX_Map_ILP(object):
                                         dpi=dpi)
             # save image
             Image('{}/{}.{}'.format(img_folder, name, extension),height = image_size,width= image_size)
-
+            print "drawing time:", time.time() - s, " s \n"
             return fig,ax
 
 
@@ -419,6 +436,9 @@ class OSMNX_Map_ILP(object):
         """
         add budget list
         """
+        print "set_budget................................................"
+        s = time.time()
+
         # if data type is geodataframe
         if self.gdf is not False :
 
@@ -471,6 +491,10 @@ class OSMNX_Map_ILP(object):
 
             # benefit
             self.Benefit = [ self.cost_reduction for i in xrange(len(self.Edge))]
+        print "Budget set get        :" , time.time() - s, " s"
+        print "Cost: " , len(self.Cost), " bytes: ", sys.getsizeof(self.Cost)
+        print "Wall: " , len(self.Wallij) + len(self.Walli) + len(self.Wallj) , " bytes: ", sys.getsizeof(self.Wallij) + sys.getsizeof(self.Walli) + sys.getsizeof(self.Wallj)
+        print "Benefit: " , len(self.Benefit), " bytes: ", sys.getsizeof(self.Benefit)
 
     #@profile
     def update_model_OSMNX(self,d ,h,
@@ -502,6 +526,7 @@ class OSMNX_Map_ILP(object):
         CompareHouses = self.GetCompareHousesSet_OSMNX()
 
         # budget constraint
+        #print "Budget_Constraint.................."
         Budget_Constraint = self.model.addConstr((quicksum(self.Cost[i]*self.x[self.Houses[i]] for i in xrange(len(self.Houses))) +
                              quicksum(self.Wallij[i]*self.z[self.Edge[i]] for i in xrange(len(self.Edge))) -
                              quicksum(self.Benefit[i]*self.y[self.Edge[i]] for i in xrange(len(self.Edge))) -
@@ -515,29 +540,34 @@ class OSMNX_Map_ILP(object):
 
         # set the boundary for zij
         # zij == 1 iff xi + xj = 1
+        #print "XOR1..............................."
         XOR1 = self.model.addConstrs((self.x[self.Edge[i][0]] - self.x[self.Edge[i][1]] - self.z[self.Edge[i]] <= 0
                               for i in xrange(len(self.Edge))
                              ),name = "XOR1")
+        #print "XOR2..............................."
         XOR2 = self.model.addConstrs((self.x[self.Edge[i][1]] - self.x[self.Edge[i][0]] - self.z[self.Edge[i]] <= 0
                               for i in xrange(len(self.Edge))
                              ),name = "XOR2")
+        #print "XOR3..............................."
         XOR3 = self.model.addConstrs((self.x[self.Edge[i][1]] + self.x[self.Edge[i][0]] + self.z[self.Edge[i]] <= 2
                               for i in xrange(len(self.Edge))
                              ),name = "XOR3")
+        #print "XOR4..............................."
         XOR4 = self.model.addConstrs((-self.x[self.Edge[i][1]] - self.x[self.Edge[i][0]] + self.z[self.Edge[i]] <= 0
                               for i in xrange(len(self.Edge))
                              ),name = "XOR4")
 
         # set the boundary for yij
         # yij == 1 iff xi*xj = 1
+        #print "CD1................................."
         CD1 = self.model.addConstrs((self.x[self.Edge[i][1]] + self.x[self.Edge[i][0]] - self.y[self.Edge[i]] <= 1
                               for i in xrange(len(self.Edge))
                              ),name = "CD1")
-
+        #print "CD2................................."
         CD2 = self.model.addConstrs((-self.x[self.Edge[i][1]]  + self.y[self.Edge[i]] <= 0
                               for i in xrange(len(self.Edge))
                              ),name = "CD2")
-
+        #print "CD3................................."
         CD3 = self.model.addConstrs((-self.x[self.Edge[i][0]]  + self.y[self.Edge[i]] <= 0
                               for i in xrange(len(self.Edge))
                              ),name = "CD3")
@@ -615,6 +645,8 @@ class OSMNX_Map_ILP(object):
 
 
                 # set constrain for bigM variables
+                print "add constraint for bigM variables.................."
+                s = time.time()
                 test_count = 0
                 for o in occupied:
 
@@ -629,7 +661,7 @@ class OSMNX_Map_ILP(object):
                                               +
                                                 total*self.x[o] ) ,
                                         name = "for each occupied")
-
+                print "Constraint for BigM get: ", time.time() - s, " s"
 
                 # set objective function
                 # notice that for each bigM constraint

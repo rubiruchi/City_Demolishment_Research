@@ -2,10 +2,10 @@
 from CTILP_Optimization_Baltimore_TestComplexity_ver02_profile import *
 
 @profile
-def set_up_data(radius, file_name):
+def set_up_data(radius_, file_name):
 
     # model
-    m = OSMNX_Map_ILP(file_name, radius=700, same=True, Baltimore =False)
+    m = OSMNX_Map_ILP(file_name, radius=radius_, same=True, Baltimore =False)
     return m
 
 @profile
@@ -22,9 +22,9 @@ if __name__ == '__main__':
 
     # map radius (meters)
     # Total Budget (USD)
-    radius = 700
+    radius = 1000
     Budget = 500000
-    file_name = '_1516KenhillAve700_171117'
+    file_name = '_1516KenhillAve1000_122917'
     model_type = 'bigM'
     power = 'power1'
     effective_distance = 240
