@@ -22,9 +22,9 @@ if __name__ == '__main__':
 
     # map radius (meters)
     # Total Budget (USD)
-    radius = 1000
+    radius = 1300
     Budget = 500000
-    file_name = '_1516KenhillAve1000_122917'
+    file_name = '_1516KenhillAve1300_123017'
     model_type = 'bigM'
     power = 'power1'
     effective_distance = 240
