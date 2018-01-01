@@ -1,6 +1,6 @@
 Configured osmnx
 Geocoded "1516 Kenhill Ave, Baltimore, MD" to (39.3086738, -76.5779359483561)
-Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.01 seconds
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
 Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
 Created bounding box 1000 meters in each direction from (39.3086738, -76.5779359483561): 39.3176812459,39.2996663392,-76.5663413028,-76.5895305032
 Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
@@ -9,29 +9,29 @@ Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
 Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
 Requesting network data within bounding box from API in 1 request(s)
 Retrieved response from cache file "cache/0601b6c997ca3ec5684be61d08311fc9.json" for URL "http://www.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A180%5D%3B%28way%5B%22highway%22%5D%5B%22area%22%21~%22yes%22%5D%5B%22highway%22%21~%22cycleway%7Cmotor%7Cproposed%7Cconstruction%7Cabandoned%7Cplatform%7Craceway%22%5D%5B%22foot%22%21~%22no%22%5D%5B%22service%22%21~%22private%22%5D%5B%22access%22%21~%22private%22%5D%2839.29516190%2C-76.59532941%2C39.32218566%2C-76.56054235%29%3B%3E%3B%29%3Bout%3B"
-Got all network data within bounding box from API in 1 request(s) and 0.05 seconds
+Got all network data within bounding box from API in 1 request(s) and 0.04 seconds
 Creating networkx graph from downloaded OSM data...
-Graph was not connected, retained only the largest weakly connected component (4,967 of 5,067 total nodes) in 0.27 seconds
+Graph was not connected, retained only the largest weakly connected component (4,967 of 5,067 total nodes) in 0.34 seconds
 Created graph with 4,967 nodes and 12,994 edges in 0.56 seconds
-Added edge lengths to graph in 0.10 seconds
-Truncated graph by bounding box in 0.32 seconds
+Added edge lengths to graph in 0.13 seconds
+Truncated graph by bounding box in 0.36 seconds
 Begin topologically simplifying the graph...
 Identified 2,559 edge endpoints in 0.08 seconds
-Constructed all paths to simplify in 0.01 seconds
-Simplified graph (from 4,967 to 2,559 nodes and from 12,994 to 8,178 edges) in 0.40 seconds
-Truncated graph by bounding box in 0.30 seconds
+Constructed all paths to simplify in 0.02 seconds
+Simplified graph (from 4,967 to 2,559 nodes and from 12,994 to 8,178 edges) in 0.43 seconds
+Truncated graph by bounding box in 0.42 seconds
 Removed 3 isolated nodes
-Graph was not connected, retained only the largest weakly connected component (1,087 of 1,111 total nodes) in 0.15 seconds
-Got the counts of undirected street segments incident to each node (before removing peripheral edges) in 0.33 seconds
+Graph was not connected, retained only the largest weakly connected component (1,087 of 1,111 total nodes) in 0.11 seconds
+Got the counts of undirected street segments incident to each node (before removing peripheral edges) in 0.31 seconds
 graph_from_bbox() returning graph with 1,087 nodes and 3,514 edges
 graph_from_point() returning graph with 1,087 nodes and 3,514 edges
 graph_from_address() returning graph with 1,087 nodes and 3,514 edges
-Created a GeoDataFrame from graph in 0.10 seconds
-Projected the GeoDataFrame "unnamed_nodes" to UTM-18 in 0.09 seconds
-Projected the GeoDataFrame "unnamed_edges" to UTM-18 in 0.32 seconds
-Extracted projected node geometries from GeoDataFrame in 0.04 seconds
-Rebuilt projected graph in 0.97 seconds
-Created GeoDataFrame "unnamed_nodes" from graph in 0.21 seconds
+Created a GeoDataFrame from graph in 0.08 seconds
+Projected the GeoDataFrame "unnamed_nodes" to UTM-18 in 0.07 seconds
+Projected the GeoDataFrame "unnamed_edges" to UTM-18 in 0.24 seconds
+Extracted projected node geometries from GeoDataFrame in 0.03 seconds
+Rebuilt projected graph in 0.76 seconds
+Created GeoDataFrame "unnamed_nodes" from graph in 0.08 seconds
 
 Vacant Set: VacantSet-OSMNX/vacantOSMNX_1516KenhillAve1800_123117 
 
@@ -43,8 +43,8 @@ Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
 Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
 Requesting building footprints data within bounding box from API in 1 request(s)
 Retrieved response from cache file "cache/2cc83d57b3662f4e5dc4d7274a1596fc.json" for URL "http://www.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A180%5D%3B%28%28way%5B%22building%22%5D%2839.29246036%2C-76.59880608%2C39.32488719%2C-76.55706552%29%3B%28._%3B%3E%3B%29%3B%29%3B%28relation%5B%22building%22%5D%2839.29246036%2C-76.59880608%2C39.32488719%2C-76.55706552%29%3B%28._%3B%3E%3B%29%3B%29%29%3Bout%3B"
-Got all building footprints data within bounding box from API in 1 request(s) and 1.55 seconds
+Got all building footprints data within bounding box from API in 1 request(s) and 1.16 seconds
 
-GEOdataframe get: 10.3262789249  s
+GEOdataframe get: 9.10530090332  s
 list size(gdf)  : (28347, 47)
 size(byte) 
