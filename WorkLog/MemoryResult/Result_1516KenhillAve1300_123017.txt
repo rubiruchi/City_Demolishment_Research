@@ -1,0 +1,185 @@
+Configured osmnx
+Geocoded "1516 Kenhill Ave, Baltimore, MD" to (39.3086738, -76.5779359483561)
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.01 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Created bounding box 1000 meters in each direction from (39.3086738, -76.5779359483561): 39.3176812459,39.2996663392,-76.5663413028,-76.5895305032
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Requesting network data within bounding box from API in 1 request(s)
+Retrieved response from cache file "cache/0601b6c997ca3ec5684be61d08311fc9.json" for URL "http://www.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A180%5D%3B%28way%5B%22highway%22%5D%5B%22area%22%21~%22yes%22%5D%5B%22highway%22%21~%22cycleway%7Cmotor%7Cproposed%7Cconstruction%7Cabandoned%7Cplatform%7Craceway%22%5D%5B%22foot%22%21~%22no%22%5D%5B%22service%22%21~%22private%22%5D%5B%22access%22%21~%22private%22%5D%2839.29516190%2C-76.59532941%2C39.32218566%2C-76.56054235%29%3B%3E%3B%29%3Bout%3B"
+Got all network data within bounding box from API in 1 request(s) and 0.05 seconds
+Creating networkx graph from downloaded OSM data...
+Graph was not connected, retained only the largest weakly connected component (4,967 of 5,067 total nodes) in 0.37 seconds
+Created graph with 4,967 nodes and 12,994 edges in 0.64 seconds
+Added edge lengths to graph in 0.07 seconds
+Truncated graph by bounding box in 0.40 seconds
+Begin topologically simplifying the graph...
+Identified 2,559 edge endpoints in 0.08 seconds
+Constructed all paths to simplify in 0.01 seconds
+Simplified graph (from 4,967 to 2,559 nodes and from 12,994 to 8,178 edges) in 0.55 seconds
+Truncated graph by bounding box in 0.32 seconds
+Removed 3 isolated nodes
+Graph was not connected, retained only the largest weakly connected component (1,087 of 1,111 total nodes) in 0.15 seconds
+Got the counts of undirected street segments incident to each node (before removing peripheral edges) in 0.38 seconds
+graph_from_bbox() returning graph with 1,087 nodes and 3,514 edges
+graph_from_point() returning graph with 1,087 nodes and 3,514 edges
+graph_from_address() returning graph with 1,087 nodes and 3,514 edges
+Created a GeoDataFrame from graph in 0.09 seconds
+Projected the GeoDataFrame "unnamed_nodes" to UTM-18 in 0.07 seconds
+Projected the GeoDataFrame "unnamed_edges" to UTM-18 in 0.26 seconds
+Extracted projected node geometries from GeoDataFrame in 0.04 seconds
+Rebuilt projected graph in 1.10 seconds
+Created GeoDataFrame "unnamed_nodes" from graph in 0.08 seconds
+
+Vacant Set: VacantSet-OSMNX/vacantOSMNX_1516KenhillAve1300_123017 
+
+Geocoded "1516 Kenhill Ave, Baltimore, MD" to (39.3086738, -76.5779359483561)
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Created bounding box 1300 meters in each direction from (39.3086738, -76.5779359483561): 39.3203834768,39.2969640981,-76.5628628915,-76.5930088519
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Requesting building footprints data within bounding box from API in 1 request(s)
+Retrieved response from cache file "cache/5efa63bf2c1efae623da2b1e6394edf5.json" for URL "http://www.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A180%5D%3B%28%28way%5B%22building%22%5D%2839.29696410%2C-76.59300885%2C39.32038348%2C-76.56286289%29%3B%28._%3B%3E%3B%29%3B%29%3B%28relation%5B%22building%22%5D%2839.29696410%2C-76.59300885%2C39.32038348%2C-76.56286289%29%3B%28._%3B%3E%3B%29%3B%29%29%3Bout%3B"
+Got all building footprints data within bounding box from API in 1 request(s) and 0.58 seconds
+
+GEOdataframe get: 4.62391495705  s
+list size(gdf)  : (13571, 37)
+size(byte)      : 21237358  bytes 
+
+
+.............................initial_housetype......................................
+Projected the GeoDataFrame "unnamed" to UTM-18 in 11.70 seconds
+Projected the GeoDataFrame "unnamed" to UTM-18 in 10.65 seconds
+House type GEOdataframe get: 561.509248018  s
+list size(gdf_proj)        : (13571, 38)
+size(byte)                 : 21345926  bytes 
+
+
+.............................initial_storytype..................................
+
+.............................GetEdgeSet_OSMNX...................................
+EdgeSet from : EdgeSet-OSMNX/EdgeOSMNX_1516KenhillAve1300_123017
+Edge set get   : 0.172825098038  s
+list size(edge): 11634
+size(byte)     : 98632  bytes 
+
+
+............................Get Houses,Renters,Owners,Vacants......................................
+Houses_Renter_Owner_VacantSet get: 0.278760194778  s
+Houses :  13523  bytes:  121824  bytes
+Renters:  11160  bytes:  98632  bytes
+Owners :  0  bytes:  72  bytes
+Vacants:  968  bytes:  7992  bytes 
+
+
+.............................set_budget................................................
+Budget set get        : 2.02274012566  s
+Cost:  13523  bytes:  111008
+Wall:  34902  bytes:  295896
+Benefit:  11634  bytes:  98632
+
+.............................GetCompareHousesSet_OSMNX..............................
+Compare set get        : 1.7790620327  s
+list size(comparehouse): 10802880
+size(byte)             : 91719120  bytes 
+
+
+.............................add constraint for bigM variables..................
+Constraint for BigM get:  1985.34115005  s
+Optimize a model with 93994 rows, 47951 columns and 809794 nonzeros
+Variable types: 11160 continuous, 36791 integer (36791 binary)
+Coefficient statistics:
+  Matrix range     [4e-03, 1e+05]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [4e-03, 5e+05]
+Found heuristic solution: objective -5130.98
+Presolve removed 7340 rows and 3145 columns
+Presolve time: 1.99s
+Presolved: 86654 rows, 44806 columns, 790092 nonzeros
+Variable types: 11106 continuous, 33700 integer (33697 binary)
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+   15114   -4.9564002e+03   0.000000e+00   0.000000e+00      5s
+
+Root relaxation: objective -4.956400e+03, 15114 iterations, 2.95 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 -4956.4002    0    5 -5130.9760 -4956.4002  3.40%     -    6s
+H    0     0                    -4961.566045 -4956.4002  0.10%     -    6s
+H    0     0                    -4960.118977 -4956.4002  0.07%     -    6s
+     0     0 -4956.9406    0   14 -4960.1190 -4956.9406  0.06%     -    7s
+     0     0 -4956.9406    0    1 -4960.1190 -4956.9406  0.06%     -    8s
+H    0     0                    -4958.658476 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    3 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    1 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    2 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    1 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    1 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    4 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    4 -4958.6585 -4956.9406  0.03%     -    8s
+     0     0 -4956.9406    0    4 -4958.6585 -4956.9406  0.03%     -    8s
+     0     2 -4956.9406    0    4 -4958.6585 -4956.9406  0.03%     -    8s
+
+Cutting planes:
+  Gomory: 1
+  Cover: 1
+  GUB cover: 1
+  Inf proof: 1
+
+Explored 15449 nodes (32534 simplex iterations) in 8.94 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 4: -4958.66 -4960.12 -4961.57 -5130.98 
+Pool objective bound -4958.16
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -4.958658476267e+03, best bound -4.958164239621e+03, gap 0.0100%
+
+.............................plot....................................................
+Projected the GeoDataFrame "unnamed" to UTM-18 in 13.28 seconds
+Geocoded "1516 Kenhill Ave, Baltimore, MD" to (39.3086738, -76.5779359483561)
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Created bounding box 1560.0 meters in each direction from (39.3086738, -76.5779359483561): 39.3227254092,39.2946221547,-76.5598482618,-76.5960234141
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Projected the GeoDataFrame "geometry to project" to EPSG 4326 in 0.00 seconds
+Requesting network data within bounding box from API in 1 request(s)
+Retrieved response from cache file "cache/8799226afee5203d82eae763a322efbe.json" for URL "http://www.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A180%5D%3B%28way%5B%22highway%22%5D%5B%22area%22%21~%22yes%22%5D%5B%22highway%22%21~%22cycleway%7Cmotor%7Cproposed%7Cconstruction%7Cabandoned%7Cplatform%7Craceway%22%5D%5B%22foot%22%21~%22no%22%5D%5B%22service%22%21~%22private%22%5D%5B%22access%22%21~%22private%22%5D%2839.29462215%2C-76.59602341%2C39.32272541%2C-76.55984826%29%3B%3E%3B%29%3Bout%3B"
+Got all network data within bounding box from API in 1 request(s) and 0.04 seconds
+Creating networkx graph from downloaded OSM data...
+Graph was not connected, retained only the largest weakly connected component (5,506 of 5,604 total nodes) in 0.30 seconds
+Created graph with 5,506 nodes and 14,364 edges in 0.55 seconds
+Added edge lengths to graph in 0.20 seconds
+Truncated graph by bounding box in 0.31 seconds
+Removed 0 isolated nodes
+Graph was not connected, retained only the largest weakly connected component (4,843 of 4,874 total nodes) in 0.32 seconds
+graph_from_bbox() returning graph with 4,843 nodes and 12,934 edges
+graph_from_point() returning graph with 4,843 nodes and 12,934 edges
+graph_from_address() returning graph with 4,843 nodes and 12,934 edges
+Begin topologically simplifying the graph...
+Identified 2,901 edge endpoints in 0.11 seconds
+Constructed all paths to simplify in 0.01 seconds
+Simplified graph (from 4,843 to 2,901 nodes and from 12,934 to 9,050 edges) in 0.30 seconds
+Created a GeoDataFrame from graph in 0.22 seconds
+Projected the GeoDataFrame "unnamed_nodes" to UTM-18 in 0.18 seconds
+Projected the GeoDataFrame "unnamed_edges" to UTM-18 in 1.05 seconds
+Extracted projected node geometries from GeoDataFrame in 0.08 seconds
+Rebuilt projected graph in 2.39 seconds
+Projected the GeoDataFrame "geometry to project" to UTM-18 in 0.00 seconds
+Created bounding box 1300 meters in each direction from (39.3086738, -76.5779359483561) and projected it: 4353518.27799,4350918.27799,365255.98746,362655.98746
+Begin plotting the graph...
+Drew the graph edges in 0.13 seconds
+Saved the figure to disk in 0.37 seconds
+drawing time: 657.655679941  s 
+
+['Budget : 494000.0   number of houses : 24.0   ObjVal : -4958.65847627   Running Time : 8.94623088837']
+mprof: Sampling memory every 0.1s
+running as a Python program...
