@@ -1,6 +1,6 @@
 ## Combinatorial Optimization: Strategic Demolition of Vacant Houses
 
-[![license](https://github.com/LennyFan/City_Demolishment_Research/blob/master/LICENSE)]
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/LennyFan/City_Demolishment_Research/blob/master/LICENSE)
 ### Tool:
 
 * Python
