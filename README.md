@@ -36,8 +36,4 @@ The purpose of project is trying to build a strategic solution of improving the 
 Match the data to OpenStreetMap using OSMNX
 
 
-## Log:
-*  2017-11-15  `Get clean vacant houses set in OpenStreetMap format (Baltimore City)`
-
-
    
