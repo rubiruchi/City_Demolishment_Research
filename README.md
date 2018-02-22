@@ -32,7 +32,7 @@ The purpose of project is trying to build a strategic solution of improving the 
 
 #### Report[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B19%5DQuick-Implement-for-difference-distance.ipynb)]
 
-#### City Footprint+Fetch City Vacancy[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B15%5DBaltimore_City_FootPrint%2BFetch_City_Vacancy.ipynb)]
+#### City Footprint+Fetch City Vacancy[[nbviewer](https://github.com/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B15%5DBaltimore_City_FootPrint%2BFetch_City_Vacancy.ipynb)]
 Match the data to OpenStreetMap using OSMNX
 
 
