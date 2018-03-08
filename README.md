@@ -28,7 +28,10 @@ The purpose of project is trying to build a strategic solution of improving the 
 #### Result Analysis 2[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/29-TradeOffAnalysis.ipynb)]
 
 
-#### PipeLine[[nbviewr](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B26%5D-Pipeline-notebook.ipynb)]
+#### PipeLine Proprecss[[nbviewr](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B26%5D-Pipeline-notebook.ipynb)]
+
+![alt text](https://github.com/LennyFan/City_Demolishment_Research/blob/master/WorkLog/combineplot/DataPipeline.png)
+
 
 ***
 ### OXMNX
