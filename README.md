@@ -21,9 +21,12 @@ The purpose of project is trying to build a strategic solution of improving the 
 
       `Basic Info | Adjacent Analysis | Run Time Analysis | Basic Result`
 
-#### Result Demo Plot[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/28-Demo.ipynb)]
+#### Result Demo Plot[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/28-SingleSolutionDemo.ipynb)]
 
-#### Result Analysis[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/27-Report.ipynb)]
+#### Result Analysis 1[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/27-BasicResultAnalysis.ipynb)]
+
+#### Result Analysis 2[[nbviewer](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/29-TradeOffAnalysis.ipynb)]
+
 
 #### PipeLine[[nbviewr](http://nbviewer.jupyter.org/github/LennyFan/City_Demolishment_Research/blob/master/WorkLog/%5B26%5D-Pipeline-notebook.ipynb)]
 
